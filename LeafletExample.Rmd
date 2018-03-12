@@ -1,0 +1,41 @@
+---
+title: "A Leaflet brief example"
+author: "Mauricio Paletta"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+Sys.setlocale("LC_ALL","English")
+```
+
+# `r format(Sys.Date(), "%B %d (%A), %Y")`
+
+## Synopsis
+
+This is a brief example of using the leaflet package in R in a HTML R-Markdown file. 
+It shows the 2018 FIFA World Cup countries. A mark is added using the country flag as the icon.
+
+```{r}
+require(leaflet)
+```
+
+## 2018 FIFA World Cup Countries
+
+```{r}
+FIFA2018 <- read.csv("C:\\Assignment 14\\FIFA2018.csv", sep = ";")
+
+leafIcons <- icons(
+  iconUrl = paste("C:\\Assignment 14\\", FIFA2018$Country, ".png", sep = ""),
+  iconWidth = 24, iconHeight = 24,
+  iconAnchorX = 12, iconAnchorY = 12
+)
+
+map <- leaflet(FIFA2018) %>% 
+    addTiles %>% 
+    addMarkers(~lng, ~lat, popup =~ Name, icon = leafIcons)
+map
+
+
+```
